@@ -50,4 +50,18 @@ $ curl -v localhost:8080
  - List of labs - Must return 5 labs in list (GET)
  - Api to return single lab by name (GET)
 
+### Test controller
+ - Add Test (Post)
+ - List of Test - Must return 5 Test in list (GET)
+ - Api to return single Test by name (GET)
+
+### Customer controller
+ - Add Customer (Post)
+ - List of Customer - Must return 5 Customer in list (GET)
+ - Api to return single Customer by username (GET)
+
  
+### Refs
+ - How to create a new project : https://start.spring.io/
+ - Spring Docs : https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+

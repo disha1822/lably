@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.xfactor.lably.entity.Lab;
+import com.xfactor.lably.entity.Tests;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +18,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    ArrayList<Lab> labs = new ArrayList<>();
+    ArrayList<Tests> tests = new ArrayList<>();
 
+    @PostMapping("/addtest")
+    public Tests addTest(@RequestBody Tests test){
+        tests.add(test);
+        return test;
+    }
+
+    @GetMapping("/gettest")
+    public ArrayList<Tests> getTest(){
+        return tests;
+
+    }
+    @GetMapping("/searchtest")
+    public ArrayList<Tests> searchTest(@RequestParam String name){
+
+        ArrayList<Tests> tst = new ArrayList<>();
+        boolean f = false;
+
+        for(Tests t: tests){
+            if(t.getName().equals(name)){
+                f = true;
+                tst.add(t);
+            }              
+        }
+        if(f==true) return tst;
+        else return null;
+    }
+
+    
+    /*
     // @RequestMapping(method = RequestMethod.GET)
     @GetMapping
     public String hello() {
@@ -65,24 +94,6 @@ public class TestController {
         labs.add(lab);
         return lab;
     }
-
-    // // http://localhost:8080/test/hello/xfactor
-    // @GetMapping("/hello/{name}")
-    // @ResponseBody
-    // public String index_greetings(@PathVariable String name) {
-    // return "Greetings :" + name;
-    // }
-
-    // // http://localhost:8080/test/hello2?id=16
-    // @GetMapping("/hello2")
-    // @ResponseBody
-    // public String getFoos(@RequestParam String id) {
-    // return "ID: " + id;
-    // }
-
-    // @PostMapping("/employees")
-    // Employee newEmployee(@RequestBody Employee newEmployee) {
-    // return repository.save(newEmployee);
-    // }
+    */
 
 }
