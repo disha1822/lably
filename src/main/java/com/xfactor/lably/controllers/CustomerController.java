@@ -1,11 +1,11 @@
 package com.xfactor.lably.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.xfactor.lably.entity.Customer;
+import com.xfactor.lably.repository.CustomerRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,34 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/customer")
 public class CustomerController{
 
-    ArrayList<Customer> customers = new ArrayList<>();
+    @Autowired
+    CustomerRepository customerrepo;
 
     @PostMapping("/addcustomer")
     public Customer addCustomer(@RequestBody Customer customer){
-        customers.add(customer);
-        return customer;
+        Customer persistedcustomer = customerrepo.save(customer);
+        return persistedcustomer;
     }
 
     @GetMapping("/getcustomer")
-    public ArrayList<Customer> getCustomer(){
-        return customers;
+    public List<Customer> getCustomer(){
+        List<Customer> persistedcustomers = customerrepo.findAll();
+        return persistedcustomers;
 
     }
 
-    @GetMapping("/searchcustomer")
-    public ArrayList<Customer> searchCustomer(@RequestParam String name){
+    @GetMapping("/searchCustomerByName")
+    public Customer searchCustomer(@RequestParam String name){
 
-        ArrayList<Customer> cst = new ArrayList<>();
-        boolean f = false;
-
-        for(Customer c: customers){
-            if(c.getName().equals(name)){
-                f = true;
-                cst.add(c);
-            }              
-        }
-        if(f==true) return cst;
-        else return null;
+        Customer cust = customerrepo.findByName(name);
+        return cust;
     }
 
 }

@@ -1,11 +1,11 @@
 package com.xfactor.lably.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.xfactor.lably.entity.Tests;
+import com.xfactor.lably.repository.TestsRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,33 +18,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    ArrayList<Tests> tests = new ArrayList<>();
+    @Autowired
+    TestsRepository testrepo;
 
     @PostMapping("/addtest")
     public Tests addTest(@RequestBody Tests test){
-        tests.add(test);
-        return test;
+        Tests persistedtest = testrepo.save(test);
+        return persistedtest;
     }
 
     @GetMapping("/gettest")
-    public ArrayList<Tests> getTest(){
-        return tests;
+    public List<Tests> getTest(){
+        List<Tests> persistedtests = testrepo.findAll();
 
+        return persistedtests;
     }
-    @GetMapping("/searchtest")
-    public ArrayList<Tests> searchTest(@RequestParam String name){
 
-        ArrayList<Tests> tst = new ArrayList<>();
-        boolean f = false;
+    
+    @GetMapping("/searchTestByName")
+    public Tests searchTest(@RequestParam String name){
 
-        for(Tests t: tests){
-            if(t.getName().equals(name)){
-                f = true;
-                tst.add(t);
-            }              
-        }
-        if(f==true) return tst;
-        else return null;
+        Tests test = testrepo.findByName(name);
+        return test;
     }
 
     

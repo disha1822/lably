@@ -1,6 +1,19 @@
 package com.xfactor.lably.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tbl_customer")
 public class Customer{
+
+    @Id
+    @GeneratedValue
+    @Column(name="id")
+    private Long id;
 
     private String name;
 
@@ -9,6 +22,15 @@ public class Customer{
     private String age;
 
     private String gender;
+
+    public Long  getId(){
+        return id;
+    }
+
+    public void  setId(Long id){
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
